@@ -175,6 +175,7 @@ namespace idm_clone_2
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmDownload";
             this.Text = "Download Page";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmDownload_FormClosed);
             this.Load += new System.EventHandler(this.frmDownload_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

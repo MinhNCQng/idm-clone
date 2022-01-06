@@ -12,11 +12,22 @@ namespace idm_clone_2
 {
     public partial class frmDownload : Form
     {
-        public frmDownload(frMain frm)
+        static readonly object _lock = new object();
+        public frmDownload(frMain _frmMain)
         {
             InitializeComponent();
-            this._fmMain = frm;
+            this.mainListView = _frmMain.listView1;
+            this.numberOfThread = _frmMain.numberOfThread;
+
+            Control.CheckForIllegalCrossThreadCalls = false;
         }
+
+        /*
+        public frmDownload()
+        { 
+            InitializeComponent();
+        }
+        */
 
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -27,7 +38,6 @@ namespace idm_clone_2
             httpDownloader.ProgressChanged += HttpDownloader_ProgressChanged;
             httpDownloader.DownloadCompleted += HttpDownloader_DownloadCompleted;
             httpDownloader.Start();
-            
         }
 
         private void HttpDownloader_DownloadCompleted(object sender, EventArgs e)
@@ -51,14 +61,16 @@ namespace idm_clone_2
             item.SubItems.Add(row.DateTime.ToLongDateString());
             this.Invoke((MethodInvoker)delegate
             {
-                _fmMain.listView1.Items.Add(item);
+                this.mainListView.Items.Add(item);
             });
+
+            this.Close();
         }
 
         private void HttpDownloader_ProgressChanged(object sender, AltoHttp.ProgressChangedEventArgs e)
         {
             progressBar.Minimum = 0;
-            
+
             lblStatus.Text = $"Downloaded {e.Progress.ToString("0.00")}%";
             progressBar.Value = int.Parse(Math.Truncate(double.Parse(e.Progress.ToString("0.00"))).ToString());
             progressBar.Update();
@@ -66,7 +78,7 @@ namespace idm_clone_2
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            client.CancelAsync();
+            //client.CancelAsync();
             httpDownloader.StopReset();
         }
 
@@ -90,14 +102,17 @@ namespace idm_clone_2
         public double FileSize { get; set; }
         public double Percentage { get; set; }
 
-        private frMain _fmMain;
+        private ListView mainListView;
+
+        private int numberOfThread;
+
         private void frmDownload_Load(object sender, EventArgs e)
         {
             client = new WebClient();
             client.DownloadProgressChanged += Client_DownloadProgressChanged;
             client.DownloadFileCompleted += Client_DownloadDataCompleted;
-            txtAddress.Text = Url;
 
+            txtAddress.Text = Url;
             txtPath.Text = Properties.Settings.Default.Path;
         }
 
@@ -119,7 +134,13 @@ namespace idm_clone_2
             item.SubItems.Add(row.FileName);
             item.SubItems.Add(row.FileSize);
             item.SubItems.Add(row.DateTime.ToLongDateString());
-            _fmMain.listView1.Items.Add(item);
+
+            //this.mainListView.Items.Add(item);
+            this.Invoke((MethodInvoker)delegate
+            {
+                this.mainListView.Items.Add(item);
+            });
+
             this.Close();
         }
 
@@ -137,12 +158,26 @@ namespace idm_clone_2
 
         private void btnPause_Click(object sender, EventArgs e)
         {
-            if (httpDownloader != null) httpDownloader.Pause();
+            if (httpDownloader != null)
+            { 
+                httpDownloader.Pause();
+            }
         }
 
         private void btnRemuse_Click(object sender, EventArgs e)
         {
-            if (httpDownloader != null) httpDownloader.Resume() ;
+            if (httpDownloader != null) 
+            { 
+                httpDownloader.Resume() ;
+            }
+        }
+
+        private void frmDownload_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            lock (_lock)
+            {
+                this.numberOfThread--;
+            }
         }
     }
 }

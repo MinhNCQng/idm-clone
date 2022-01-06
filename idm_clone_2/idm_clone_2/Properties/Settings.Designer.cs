@@ -25,13 +25,37 @@ namespace idm_clone_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Public\\Downloads")]
         public string Path {
             get {
                 return ((string)(this["Path"]));
             }
             set {
                 this["Path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int MaxNumDownloadFiles {
+            get {
+                return ((int)(this["MaxNumDownloadFiles"]));
+            }
+            set {
+                this["MaxNumDownloadFiles"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double MaxSpeed {
+            get {
+                return ((double)(this["MaxSpeed"]));
+            }
+            set {
+                this["MaxSpeed"] = value;
             }
         }
     }

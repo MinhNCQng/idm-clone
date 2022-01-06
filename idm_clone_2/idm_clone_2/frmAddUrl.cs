@@ -10,9 +10,14 @@ namespace idm_clone_2
 {
     public partial class frmAddUrl : Form
     {
-        public frmAddUrl()
+        static readonly object _lock = new object();
+
+        public frmAddUrl(frMain _frmMain)
         {
             InitializeComponent();
+            lock (_lock) { 
+                _frmMain.numberOfThread++;
+            }
         }
 
         public string Url { get; set; }
@@ -28,21 +33,25 @@ namespace idm_clone_2
                         break;
                     case DialogResult.Cancel:
                         this.DialogResult = DialogResult.Cancel;
+                        //this.Close();
                         break;
                     default:
                         this.DialogResult = DialogResult.Cancel;
+                        //this.Close();
                         break;
                 }
             }
             else
             { 
                 this.Url = txtUrl.Text;
+                //this.Close();
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+            //this.Close();
         }
     }
 }

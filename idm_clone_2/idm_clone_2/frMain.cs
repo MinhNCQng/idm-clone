@@ -8,11 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AltoHttp;
+using System.Threading;
+
 
 namespace idm_clone_2
 {
     public partial class frMain : Form
     {
+        public int numberOfThread = 0;
+
+        public int maxNumOfThread = Properties.Settings.Default.MaxNumDownloadFiles;
+        static readonly object _lock = new object();
+
         public frMain()
         {
             InitializeComponent();
@@ -28,6 +36,33 @@ namespace idm_clone_2
 
         private void tsAddUrl_Click(object sender, EventArgs e)
         {
+            if (numberOfThread <= maxNumOfThread)
+            {
+                new Thread(() =>
+                {
+                    using (frmAddUrl frm = new frmAddUrl(this))
+                    {
+                        if (frm.ShowDialog() == DialogResult.OK)
+                        {
+                            frmDownload frmDownload = new frmDownload(this);
+                            frmDownload.Url = frm.Url;
+                            frmDownload.ShowDialog();
+                            numberOfThread--;
+                        }
+                        else
+                        {
+                            numberOfThread--;
+                        }
+                    }
+                })
+                { IsBackground = true }.Start();
+            }
+            else 
+            {
+                MessageBox.Show("Maximum number of download", "Alert", MessageBoxButtons.OK);
+            }
+
+            /*
             using (frmAddUrl frm = new frmAddUrl())
             {
                 if (frm.ShowDialog() == DialogResult.OK)
@@ -37,6 +72,7 @@ namespace idm_clone_2
                     frmDownload.Show();
                 }
             }
+            */
         }
 
         private void tsRemove_Click(object sender, EventArgs e)
