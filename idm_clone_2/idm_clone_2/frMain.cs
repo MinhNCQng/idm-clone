@@ -16,10 +16,9 @@ namespace idm_clone_2
 {
     public partial class frMain : Form
     {
-        public int numberOfThread = 0;
+        public int numberOfThread = 1;
 
         public int maxNumOfThread = Properties.Settings.Default.MaxNumDownloadFiles;
-        static readonly object _lock = new object();
 
         public frMain()
         {
@@ -31,6 +30,7 @@ namespace idm_clone_2
             using (frmSetting frm = new frmSetting())
             {
                 frm.ShowDialog();
+                maxNumOfThread = Properties.Settings.Default.MaxNumDownloadFiles;
             }
         }
 
@@ -46,7 +46,25 @@ namespace idm_clone_2
                         {
                             frmDownload frmDownload = new frmDownload(this);
                             frmDownload.Url = frm.Url;
-                            frmDownload.ShowDialog();
+                            DialogResult res = frmDownload.ShowDialog();
+
+                            /*
+                            if (res == DialogResult.Cancel) { 
+                                string downloadPath = frmDownload.downloadPath;
+                                string fileName = frmDownload.FileName;
+
+                                if (File.Exists(downloadPath + "/" + fileName))
+                                {
+                                    File.Delete(downloadPath + "/" + fileName);
+                                    Console.WriteLine("File deleted.");
+                                }
+                                else 
+                                { 
+                                    Console.WriteLine("File not found");
+                                }
+                            }
+                            */
+
                             numberOfThread--;
                         }
                         else

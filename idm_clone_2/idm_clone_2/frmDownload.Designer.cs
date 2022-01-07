@@ -36,12 +36,14 @@ namespace idm_clone_2
             this.txtPath = new System.Windows.Forms.TextBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.btnStart = new System.Windows.Forms.Button();
             this.btnBrowser = new System.Windows.Forms.Button();
-            this.btnPause = new System.Windows.Forms.Button();
-            this.btnRemuse = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtDownSpeed = new System.Windows.Forms.Label();
+            this.btnStart = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.btnResume = new System.Windows.Forms.Button();
+            this.btnPause = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtAddress
@@ -95,26 +97,6 @@ namespace idm_clone_2
             this.lblStatus.TabIndex = 5;
             this.lblStatus.Text = "Downloaded 0%";
             // 
-            // btnStop
-            // 
-            this.btnStop.Location = new System.Drawing.Point(401, 161);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(64, 20);
-            this.btnStop.TabIndex = 6;
-            this.btnStop.Text = "Stop";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
-            // btnStart
-            // 
-            this.btnStart.Location = new System.Drawing.Point(471, 161);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(64, 20);
-            this.btnStart.TabIndex = 6;
-            this.btnStart.Text = "Start";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
             // btnBrowser
             // 
             this.btnBrowser.Location = new System.Drawing.Point(541, 80);
@@ -124,26 +106,6 @@ namespace idm_clone_2
             this.btnBrowser.Text = "...";
             this.btnBrowser.UseVisualStyleBackColor = true;
             this.btnBrowser.Click += new System.EventHandler(this.btnBrowser_Click);
-            // 
-            // btnPause
-            // 
-            this.btnPause.Location = new System.Drawing.Point(24, 161);
-            this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(64, 20);
-            this.btnPause.TabIndex = 6;
-            this.btnPause.Text = "Pause";
-            this.btnPause.UseVisualStyleBackColor = true;
-            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
-            // 
-            // btnRemuse
-            // 
-            this.btnRemuse.Location = new System.Drawing.Point(101, 161);
-            this.btnRemuse.Name = "btnRemuse";
-            this.btnRemuse.Size = new System.Drawing.Size(64, 20);
-            this.btnRemuse.TabIndex = 6;
-            this.btnRemuse.Text = "Remuse";
-            this.btnRemuse.UseVisualStyleBackColor = true;
-            this.btnRemuse.Click += new System.EventHandler(this.btnRemuse_Click);
             // 
             // button3
             // 
@@ -155,17 +117,77 @@ namespace idm_clone_2
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.btnStop_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(85, 138);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(44, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Speed :";
+            // 
+            // txtDownSpeed
+            // 
+            this.txtDownSpeed.AutoSize = true;
+            this.txtDownSpeed.Location = new System.Drawing.Point(130, 138);
+            this.txtDownSpeed.Name = "txtDownSpeed";
+            this.txtDownSpeed.Size = new System.Drawing.Size(52, 13);
+            this.txtDownSpeed.TabIndex = 8;
+            this.txtDownSpeed.Text = "0 Bytes/s";
+            // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(460, 172);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.TabIndex = 9;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(379, 172);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 10;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // btnResume
+            // 
+            this.btnResume.Location = new System.Drawing.Point(169, 172);
+            this.btnResume.Name = "btnResume";
+            this.btnResume.Size = new System.Drawing.Size(75, 23);
+            this.btnResume.TabIndex = 11;
+            this.btnResume.Text = "Resume";
+            this.btnResume.UseVisualStyleBackColor = true;
+            this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
+            // 
+            // btnPause
+            // 
+            this.btnPause.Location = new System.Drawing.Point(88, 172);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(75, 23);
+            this.btnPause.TabIndex = 12;
+            this.btnPause.Text = "Pause";
+            this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            // 
             // frmDownload
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(583, 200);
-            this.Controls.Add(this.btnBrowser);
-            this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.btnRemuse);
+            this.ClientSize = new System.Drawing.Size(583, 213);
             this.Controls.Add(this.btnPause);
+            this.Controls.Add(this.btnResume);
             this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.txtDownSpeed);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnBrowser);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.label2);
@@ -175,7 +197,6 @@ namespace idm_clone_2
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmDownload";
             this.Text = "Download Page";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmDownload_FormClosed);
             this.Load += new System.EventHandler(this.frmDownload_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -190,11 +211,13 @@ namespace idm_clone_2
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnBrowser;
-        private System.Windows.Forms.Button btnPause;
-        private System.Windows.Forms.Button btnRemuse;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label txtDownSpeed;
+        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnResume;
+        private System.Windows.Forms.Button btnPause;
     }
 }

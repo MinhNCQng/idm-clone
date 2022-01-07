@@ -25,13 +25,13 @@ namespace idm_clone_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Public\\Downloads")]
-        public string Path {
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Public\\Downloads\\Pictures")]
+        public string ImagePath {
             get {
-                return ((string)(this["Path"]));
+                return ((string)(this["ImagePath"]));
             }
             set {
-                this["Path"] = value;
+                this["ImagePath"] = value;
             }
         }
         
@@ -56,6 +56,78 @@ namespace idm_clone_2.Properties {
             }
             set {
                 this["MaxSpeed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Public\\Downloads\\Videos")]
+        public string VideoPath {
+            get {
+                return ((string)(this["VideoPath"]));
+            }
+            set {
+                this["VideoPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Public\\Downloads\\Audio")]
+        public string AudioPath {
+            get {
+                return ((string)(this["AudioPath"]));
+            }
+            set {
+                this["AudioPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Public\\Downloads\\Documents")]
+        public string DocumentPath {
+            get {
+                return ((string)(this["DocumentPath"]));
+            }
+            set {
+                this["DocumentPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Public\\Downloads\\Compressed")]
+        public string CompressedPath {
+            get {
+                return ((string)(this["CompressedPath"]));
+            }
+            set {
+                this["CompressedPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Public\\Downloads")]
+        public string DefaultPath {
+            get {
+                return ((string)(this["DefaultPath"]));
+            }
+            set {
+                this["DefaultPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Public\\Downloads\\Executables")]
+        public string ExecutablePath {
+            get {
+                return ((string)(this["ExecutablePath"]));
+            }
+            set {
+                this["ExecutablePath"] = value;
             }
         }
     }

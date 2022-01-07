@@ -2,14 +2,32 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="idm_clone_2.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Path" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Public\Downloads</Value>
+    <Setting Name="ImagePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Public\Downloads\Pictures</Value>
     </Setting>
     <Setting Name="MaxNumDownloadFiles" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="MaxSpeed" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="VideoPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Public\Downloads\Videos</Value>
+    </Setting>
+    <Setting Name="AudioPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Public\Downloads\Audio</Value>
+    </Setting>
+    <Setting Name="DocumentPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Public\Downloads\Documents</Value>
+    </Setting>
+    <Setting Name="CompressedPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Public\Downloads\Compressed</Value>
+    </Setting>
+    <Setting Name="DefaultPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Public\Downloads</Value>
+    </Setting>
+    <Setting Name="ExecutablePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Public\Downloads\Executables</Value>
     </Setting>
   </Settings>
 </SettingsFile>
