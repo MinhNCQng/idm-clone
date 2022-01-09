@@ -14,5 +14,16 @@ namespace idm_clone_2
                 return db;
                 }
         }
+
+        static FileManagerDAO fileManager;
+
+        public static FileManagerDAO FileManager
+        {
+            get
+            {
+                if (fileManager == null) fileManager = new FileManagerDAO();
+                return fileManager;
+            }
+        }
     }
 }

@@ -80,6 +80,7 @@ namespace idm_clone_2
             this.txtPath.Name = "txtPath";
             this.txtPath.Size = new System.Drawing.Size(448, 20);
             this.txtPath.TabIndex = 2;
+            this.txtPath.TextChanged += new System.EventHandler(this.txtPath_TextChanged);
             // 
             // progressBar
             // 
@@ -157,6 +158,7 @@ namespace idm_clone_2
             // 
             // btnResume
             // 
+            this.btnResume.Enabled = false;
             this.btnResume.Location = new System.Drawing.Point(169, 172);
             this.btnResume.Name = "btnResume";
             this.btnResume.Size = new System.Drawing.Size(75, 23);
@@ -167,6 +169,7 @@ namespace idm_clone_2
             // 
             // btnPause
             // 
+            this.btnPause.Enabled = false;
             this.btnPause.Location = new System.Drawing.Point(88, 172);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(75, 23);

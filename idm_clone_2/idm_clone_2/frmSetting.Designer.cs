@@ -85,6 +85,7 @@ namespace idm_clone_2
             this.txtMaxDownloadClients.Name = "txtMaxDownloadClients";
             this.txtMaxDownloadClients.Size = new System.Drawing.Size(396, 20);
             this.txtMaxDownloadClients.TabIndex = 22;
+            this.txtMaxDownloadClients.TextChanged += new System.EventHandler(this.txtMaxDownloadClients_TextChanged);
             // 
             // label4
             // 

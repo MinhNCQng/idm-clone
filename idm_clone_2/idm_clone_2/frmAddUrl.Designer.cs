@@ -34,6 +34,7 @@ namespace idm_clone_2
             this.txtUrl = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.lbCheck = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -52,10 +53,12 @@ namespace idm_clone_2
             this.txtUrl.Name = "txtUrl";
             this.txtUrl.Size = new System.Drawing.Size(498, 20);
             this.txtUrl.TabIndex = 1;
+            this.txtUrl.TextChanged += new System.EventHandler(this.txtUrl_TextChanged);
             // 
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Enabled = false;
             this.btnOK.Location = new System.Drawing.Point(599, 33);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(64, 20);
@@ -75,6 +78,14 @@ namespace idm_clone_2
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // lbCheck
+            // 
+            this.lbCheck.AutoSize = true;
+            this.lbCheck.Location = new System.Drawing.Point(74, 81);
+            this.lbCheck.Name = "lbCheck";
+            this.lbCheck.Size = new System.Drawing.Size(0, 13);
+            this.lbCheck.TabIndex = 4;
+            // 
             // frmAddUrl
             // 
             this.AcceptButton = this.btnOK;
@@ -82,6 +93,7 @@ namespace idm_clone_2
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(686, 152);
+            this.Controls.Add(this.lbCheck);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.txtUrl);
@@ -102,5 +114,6 @@ namespace idm_clone_2
         private System.Windows.Forms.TextBox txtUrl;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label lbCheck;
     }
 }

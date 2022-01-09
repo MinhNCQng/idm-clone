@@ -27,6 +27,7 @@ namespace idm_clone_2
 
         private void tsSettings_Click(object sender, EventArgs e)
         {
+            //Mở frmSetting
             using (frmSetting frm = new frmSetting())
             {
                 frm.ShowDialog();
@@ -36,10 +37,12 @@ namespace idm_clone_2
 
         private void tsAddUrl_Click(object sender, EventArgs e)
         {
+               // Kiểm tra số lượng thread có nhỏ hơn số lượng tối đa cho phép hay không
             if (numberOfThread <= maxNumOfThread)
             {
                 new Thread(() =>
-                {
+                {   
+                    // tạo fragment tải xuống
                     using (frmAddUrl frm = new frmAddUrl(this))
                     {
                         if (frm.ShowDialog() == DialogResult.OK)
@@ -47,23 +50,6 @@ namespace idm_clone_2
                             frmDownload frmDownload = new frmDownload(this);
                             frmDownload.Url = frm.Url;
                             DialogResult res = frmDownload.ShowDialog();
-
-                            /*
-                            if (res == DialogResult.Cancel) { 
-                                string downloadPath = frmDownload.downloadPath;
-                                string fileName = frmDownload.FileName;
-
-                                if (File.Exists(downloadPath + "/" + fileName))
-                                {
-                                    File.Delete(downloadPath + "/" + fileName);
-                                    Console.WriteLine("File deleted.");
-                                }
-                                else 
-                                { 
-                                    Console.WriteLine("File not found");
-                                }
-                            }
-                            */
 
                             numberOfThread--;
                         }
@@ -77,35 +63,28 @@ namespace idm_clone_2
             }
             else 
             {
+                //Thông báo khi số lượng thread tối đa
                 MessageBox.Show("Maximum number of download", "Alert", MessageBoxButtons.OK);
             }
 
-            /*
-            using (frmAddUrl frm = new frmAddUrl())
-            {
-                if (frm.ShowDialog() == DialogResult.OK)
-                {
-                    frmDownload frmDownload = new frmDownload(this);
-                    frmDownload.Url = frm.Url;
-                    frmDownload.Show();
-                }
-            }
-            */
+        
         }
 
         private void tsRemove_Click(object sender, EventArgs e)
         {
+             //Thể hiện thông báo xác nhận xóa
             if (MessageBox.Show("Delete?? Are you sure?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                //Lấy danh sách các dòng được lựa chọn để xóa
                 for (int i = listView1.SelectedItems.Count; i > 0; i--)
                 {
+
                     ListViewItem item = listView1.SelectedItems[i - 1];
-                    App.DB.Files.Rows[item.Index].Delete();
+                    App.FileManager.delete(item.Index);
+                    
                     listView1.Items[item.Index].Remove();
 
-
-                    App.DB.AcceptChanges();
-                    App.DB.WriteXml(string.Format("{0}/data.dat", Application.StartupPath));
+                    
                 }
             }
         }
@@ -113,7 +92,7 @@ namespace idm_clone_2
         private void frMain_Load(object sender, EventArgs e)
         {
             string fileName = string.Format("{0}/data.dat", Application.StartupPath);
-            if (File.Exists(fileName))
+            if (System.IO.File.Exists(fileName))
                 App.DB.ReadXml(fileName);
             foreach (Database.FilesRow row in App.DB.Files)
             {

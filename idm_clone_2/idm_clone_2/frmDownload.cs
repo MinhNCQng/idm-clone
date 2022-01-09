@@ -10,81 +10,56 @@ namespace idm_clone_2
     public partial class frmDownload : Form
     {
         static readonly object _lock = new object();
+        //khởi tạo chức năng download và gán fragment Main vào đây để có thể access danh sách tải 
         public frmDownload(frMain _frmMain)
         {
+            
             InitializeComponent();
             this.mainListView = _frmMain.listView1;
 
             Control.CheckForIllegalCrossThreadCalls = false;
         }
-
+        //Xử lý khi ấn nút start download
         private void btnStart_Click(object sender, EventArgs e)
         {
             Uri uri = new Uri(this.Url);
+            //Lấy tên file
             FileName = System.IO.Path.GetFileName(uri.LocalPath);
-
+            //Object phục vụ việc tải xuống
             httpDownloader = new HttpDownloader(this.Url, this.downloadPath + "/" + FileName);
             httpDownloader.ProgressChanged += HttpDownloader_ProgressChanged;
             httpDownloader.DownloadCompleted += HttpDownloader_DownloadCompleted;
-            httpDownloader.Start();
+            
+            DownloadCommand = new DownloadControllCommandAdvanced(httpDownloader, btnStart, btnResume, btnPause);
+            DownloadCommand.execute("Start");
         }
-
+        //phân loại đường dẫn theo dạng tệp
         private string getDownloadPathBasedOnFileType(string fileExtension)
         {
-            string[] imageExt = {".gif", ".jpg", ".jpeg", ".jpe", ".bmp", ".png"};
-            string[] videoExt = {".mp4", ".mov", ".wmv", ".avi", ".flv", ".mkv"};
-            string[] audioExt = {".m4a", ".mp3", ".flac", ".wav", ".wma", ".aac"};
-            string[] documentExt = {".pdf", ".docx", ".xlsx", ".pptx", ".txt"};
-            string[] compressedExt = {".zip", ".rar", ".gzip", ".tar", ".7z"};
 
-            foreach (string ele in imageExt) {
-                if (fileExtension == ele) { 
-                    return Properties.Settings.Default.ImagePath;
-                }
-            }
-            foreach (string ele in videoExt) {
-                if (fileExtension == ele) { 
-                    return Properties.Settings.Default.VideoPath;
-                }
-            }
-            foreach (string ele in audioExt) {
-                if (fileExtension == ele) { 
-                    return Properties.Settings.Default.AudioPath;
-                }
-            }
-            foreach (string ele in documentExt) {
-                if (fileExtension == ele) {
-                    return Properties.Settings.Default.DocumentPath;
-                }
-            }
-            foreach (string ele in compressedExt) {
-                if (fileExtension == ele) { 
-                    return Properties.Settings.Default.CompressedPath;
-                }
-            }
-
-            return Properties.Settings.Default.DefaultPath;
+            FileTypeFactory fileType = new FileTypeFactory();
+            fileType.findFileType(fileExtension);
+            //Console.WriteLine(fileType.getFilePath());
+            return fileType.getFilePath();
         }
-
+        //Xử lý khi file tải hoàn thành
         private void HttpDownloader_DownloadCompleted(object sender, EventArgs e)
         {
-            this.FileSize = httpDownloader.TotalBytesReceived;
 
-            Database.FilesRow row = App.DB.Files.NewFilesRow();
-            row.Url = Url;
-            row.FileName = FileName;
-            row.FileSize = (string.Format("{0:0.##} KB", FileSize / 1024));
+            File newFile = new File();
+            newFile.FileSize = httpDownloader.TotalBytesReceived;
+            newFile.Url = Url;
+            newFile.FileName = FileName;
+            newFile.dateTime = DateTime.Now;
 
-            row.DateTime = DateTime.Now;
-            App.DB.Files.AddFilesRow(row);
-            App.DB.AcceptChanges();
-            App.DB.WriteXml(string.Format("{0}/data.dat", Application.StartupPath));
-            ListViewItem item = new ListViewItem(row.Id.ToString());
-
-            item.SubItems.Add(row.Url);
-            item.SubItems.Add(row.FileName);
-            item.SubItems.Add(row.FileSize);
-            item.SubItems.Add(row.DateTime.ToLongDateString());
+            FileManagerDAO fileManager = App.FileManager;
+            fileManager.add(newFile);
+            ListViewItem item = new ListViewItem(newFile.Id.ToString());
+            //Thêm một hàng vào grid dữ liệu
+            item.SubItems.Add(newFile.Url);
+            item.SubItems.Add(newFile.FileName);
+            item.SubItems.Add(newFile.FileSize.ToString());
+            item.SubItems.Add(newFile.dateTime.ToLongDateString());
             this.Invoke((MethodInvoker)delegate
             {
                 this.mainListView.Items.Add(item);
@@ -92,18 +67,18 @@ namespace idm_clone_2
 
             this.DialogResult = DialogResult.OK;
         }
-
+        //Xử lý thanh progress bar
         private void HttpDownloader_ProgressChanged(object sender, AltoHttp.ProgressChangedEventArgs e)
         {
 
             progressBar.Minimum = 0;
-
+            //Lấy thông tin dữ liệu tải về
             txtDownSpeed.Text = e.SpeedInBytes.ToHumanReadableSize() + "/s";
             lblStatus.Text = $"Downloaded {e.Progress.ToString("0.00")}%";
             progressBar.Value = int.Parse(Math.Truncate(double.Parse(e.Progress.ToString("0.00"))).ToString());
             progressBar.Update();
         }
-
+        //Nút dừng
         private void btnStop_Click(object sender, EventArgs e)
         {
             if (httpDownloader != null) 
@@ -111,8 +86,9 @@ namespace idm_clone_2
                 httpDownloader.Pause();
                 this.DialogResult = DialogResult.Cancel;
             }
+            
         }
-
+        //Thay đổi đường dẫn
         private void btnBrowser_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog fbd = new FolderBrowserDialog() { Description = "Select your path" })
@@ -126,6 +102,7 @@ namespace idm_clone_2
             }
         }
 
+        public DownloadControllCommandAdvanced DownloadCommand;
         HttpDownloader httpDownloader;
         public string Url { get; set; }
         public string FileName { get; set; }
@@ -151,21 +128,26 @@ namespace idm_clone_2
             txtPath.Text = downloadPath;
             Console.WriteLine(fileExtension);
         }
-
+        //Dừng tải
         private void btnPause_Click(object sender, EventArgs e)
         {
-            if (httpDownloader != null)
-            { 
-                httpDownloader.Pause();
+            if (DownloadCommand != null)
+            {
+                DownloadCommand.execute("Pause");
+            }
+        }
+        //Tiếp tục tải
+        private void btnResume_Click(object sender, EventArgs e)
+        {
+            if (DownloadCommand != null) 
+            {
+                DownloadCommand.execute("Resume");
             }
         }
 
-        private void btnResume_Click(object sender, EventArgs e)
+        private void txtPath_TextChanged(object sender, EventArgs e)
         {
-            if (httpDownloader != null) 
-            { 
-                httpDownloader.Resume() ;
-            }
+            this.downloadPath = txtPath.Text;
         }
     }
 }

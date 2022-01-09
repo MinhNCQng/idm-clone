@@ -7,7 +7,9 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace idm_clone_2
-{
+{   
+
+    //Gán các đường dẫn mặc định
     public partial class frmSetting : Form
     {
         public frmSetting()
@@ -186,6 +188,11 @@ namespace idm_clone_2
         }
 
         private void txtPathImage_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtMaxDownloadClients_TextChanged(object sender, EventArgs e)
         {
 
         }
